@@ -9,6 +9,8 @@
 4. Creating php.idex  [click here](#target4)
 5. Github Actions [click here](#target5) 
 6. Networking Basics [click here](#target6) 
+7. Connect to instance [click here](#target7) 
+
 
 ## Provision EC2 server using Terraform
 
@@ -198,3 +200,22 @@ $conn->close();
 4. routers : router is a network device that connects multiple networks together and forwards data between them. It operates at the network layer of the OSI model and uses routing tables to determine the best path for data to take between networks.
 
 5. routing protocols  : Routing protocols are a set of rules and algorithms. They are used to exchange routing information between routers 
+
+
+<a id="target7"></a>
+
+
+## Connect to the instance :
+
+1. Obtain the public IP address or DNS name of your EC2 instance from the Amazon EC2 console.
+2. Open a terminal or command prompt on your local machine
+3. Ensure that you have the private key file for the key pair that you selected when you launched the EC2 instance.
+4. Set the permissions on the private key file to be read-only by the owner with the following command :
+```bash
+chmod 400 /path/to/private_key.pem
+```
+5. Connect to the EC2 instance using SSH with the following command:
+```bash
+ssh -i private_key.pem user@public-ip-address
+```
+

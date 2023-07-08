@@ -1,7 +1,7 @@
 name: Perform pre-flight checks
 
 on:
-  pull_request:
+  push:
     branches:
       - dev
 
@@ -50,3 +50,4 @@ jobs:
 
       - name: Run TFLint
         run: tflint --recursive -f compact
+
