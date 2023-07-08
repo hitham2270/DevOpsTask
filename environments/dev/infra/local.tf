@@ -37,7 +37,7 @@ EOP
 EOT
 
 
-php = <<EOT
+  php = <<EOT
 <?php
 $servername = "localhost";
 $username = "${var.username}";
@@ -95,7 +95,7 @@ EOT
 
 resource "null_resource" "cp_file" {
   provisioner "file" {
-    source      =  "${path.module}/index.php"
+    source      = "${path.module}/index.php"
     destination = "/home/ubuntu/index.php"
     connection {
       type        = "ssh"
@@ -111,7 +111,7 @@ resource "null_resource" "cp_file" {
 resource "time_sleep" "wait_18_seconds" {
   create_duration = "18s"
 
- depends_on = [null_resource.cp_file , aws_instance.project-iac]
+  depends_on = [null_resource.cp_file, aws_instance.project-iac]
 
 }
 
@@ -128,7 +128,7 @@ resource "null_resource" "mv_file" {
       private_key = file("${path.module}/../../../.local/key2.pem")
     }
   }
-  depends_on = [time_sleep.wait_18_seconds ]
+  depends_on = [time_sleep.wait_18_seconds]
 
 }
 

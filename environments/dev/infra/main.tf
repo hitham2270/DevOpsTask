@@ -11,7 +11,7 @@ data "aws_ami" "Ubuntu_ami" {
 
 resource "aws_instance" "project-iac" {
 
-  depends_on = [aws_security_group.sg, aws_subnet.public_subnet ]
+  depends_on = [aws_security_group.sg, aws_subnet.public_subnet]
 
 
   ami                         = data.aws_ami.Ubuntu_ami.id
