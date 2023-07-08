@@ -1,0 +1,10 @@
+.DS_Store
+.terraform.*
+.terraform/*
+terraform.*
+.envrc
+*.env.secret
+.idea
+.terraform
+*.access-key.json
+.local
