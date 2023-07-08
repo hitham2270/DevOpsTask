@@ -1,0 +1,52 @@
+name: Perform pre-flight checks
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+permissions: read-all
+
+env:
+  GIT_COMMIT: ${{ github.sha }}
+  TARGET_BRANCH_NAME: ${{ github.base_ref }}
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git Repository
+        uses: actions/checkout@v3
+
+      # Setup Terraform
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.5
+          terraform_wrapper: false
+
+      - name: Terraform check format
+        run: terraform fmt -recursive --diff -check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git Repository
+        uses: actions/checkout@v3
+
+      # TFLint - Terraform Check
+      - uses: actions/cache@v2
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+      - uses: terraform-linters/setup-tflint@v2
+        name: Setup TFLint
+        with:
+          github_token: ${{ secrets.CI_GITHUB_TOKEN }}
+
+      - name: Show TFLint version
+        run: tflint --version
+
+      - name: Run TFLint
+        run: tflint --recursive -f compact
